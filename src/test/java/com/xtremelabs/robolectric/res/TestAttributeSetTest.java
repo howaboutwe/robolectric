@@ -1,10 +1,12 @@
 package com.xtremelabs.robolectric.res;
 
 import android.view.View;
+
 import com.xtremelabs.robolectric.R;
 import com.xtremelabs.robolectric.WithTestDefaultsRunner;
 import com.xtremelabs.robolectric.tester.android.util.TestAttributeSet;
 import com.xtremelabs.robolectric.util.CustomView;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -129,5 +131,28 @@ public class TestAttributeSetTest {
         new DocumentLoader(attrResourceLoader).loadResourceXmlDir(resourceFile("res", "values"));
         TestAttributeSet testAttributeSet = new TestAttributeSet(attributes, null, attrResourceLoader, CustomView.class, false);
         assertThat(testAttributeSet.getAttributeIntValue("some namespace", "itemType", 0), equalTo(1));
+    }
+    
+    @Test
+    public void getAttributeCount_shouldReturnZeroIfNoAttributesAvailable() throws Exception {
+        TestAttributeSet testAttributeSet = new TestAttributeSet();
+        assertThat(testAttributeSet.getAttributeCount(), equalTo(0));
+    }
+    
+    @Test
+    public void getAttributeCount_shouldReturnTheNumberOfAttributesAvailable() throws Exception {
+        TestAttributeSet testAttributeSet;
+
+        attributes.put("name_1", "value_1");
+        testAttributeSet = new TestAttributeSet(attributes, null, null, null, false);
+        assertThat(testAttributeSet.getAttributeCount(), equalTo(1));
+
+        attributes.put("name_2", "value_2");
+        testAttributeSet = new TestAttributeSet(attributes, null, null, null, false);
+        assertThat(testAttributeSet.getAttributeCount(), equalTo(2));
+
+        attributes.put("name_3", "value_3");
+        testAttributeSet = new TestAttributeSet(attributes, null, null, null, false);
+        assertThat(testAttributeSet.getAttributeCount(), equalTo(3));
     }
 }

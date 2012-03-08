@@ -2,14 +2,16 @@ package com.xtremelabs.robolectric.tester.android.util;
 
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.xtremelabs.robolectric.res.AttrResourceLoader;
 import com.xtremelabs.robolectric.res.ResourceExtractor;
 import com.xtremelabs.robolectric.util.I18nException;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TestAttributeSet implements AttributeSet {
-    Map<String, String> attributes = new HashMap<String, String>();
+    private Map<String, String> attributes;
     private ResourceExtractor resourceExtractor;
     private AttrResourceLoader attrResourceLoader;
     private Class<? extends View> viewClass;
@@ -27,6 +29,7 @@ public class TestAttributeSet implements AttributeSet {
 
     public TestAttributeSet() {
         this.attributes = new HashMap<String, String>();
+        this.resourceExtractor = new ResourceExtractor();
     }
 
     public TestAttributeSet(Map<String, String> attributes, ResourceExtractor resourceExtractor,
@@ -74,7 +77,7 @@ public class TestAttributeSet implements AttributeSet {
 
     @Override
     public int getAttributeCount() {
-        throw new UnsupportedOperationException();
+        return attributes.size();
     }
 
     @Override
