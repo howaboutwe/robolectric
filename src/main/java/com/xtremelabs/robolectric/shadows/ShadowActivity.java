@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+
 import com.xtremelabs.robolectric.Robolectric;
 import com.xtremelabs.robolectric.internal.Implementation;
 import com.xtremelabs.robolectric.internal.Implements;
@@ -370,6 +371,13 @@ public class ShadowActivity extends ShadowContextWrapper {
     @Implementation
     public final void showDialog(int id) {
         showDialog(id, null);
+    }
+    
+    @Implementation
+    public final void dismissDialog(int id) {
+        if (dialogForId.get(id) == null) {
+            throw new IllegalArgumentException();
+        }
     }
     
     @Implementation
