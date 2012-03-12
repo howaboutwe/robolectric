@@ -327,6 +327,44 @@ public class ActivityTest {
         assertSame("dialogs should be the same instance", firstDialog, secondDialog);
     }
 
+    @Test
+    public void showDialog_shouldShowDialog() throws Exception {
+        final DialogCreatingActivity activity = new DialogCreatingActivity();
+        activity.showDialog(1);
+        Dialog dialog = ShadowDialog.getLatestDialog();
+        assertTrue(dialog.isShowing());
+    }
+
+    @Test
+    public void dismissDialog_shouldDismissPreviouslyShownDialog() throws Exception {
+        final DialogCreatingActivity activity = new DialogCreatingActivity();
+        activity.showDialog(1);
+        activity.dismissDialog(1);
+        Dialog dialog = ShadowDialog.getLatestDialog();
+        assertFalse(dialog.isShowing());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void dismissDialog_shouldThrowExceptionIfDialogWasNotPreviouslyShown() throws Exception {
+        final DialogCreatingActivity activity = new DialogCreatingActivity();
+        activity.dismissDialog(1);
+    }
+
+    @Test
+    public void removeDialog_shouldCreateDialogAgain() {
+        final DialogCreatingActivity activity = new DialogCreatingActivity();
+
+        activity.showDialog(1);
+        Dialog firstDialog = ShadowDialog.getLatestDialog();
+
+        activity.removeDialog(1);
+        assertNull(Robolectric.shadowOf(activity).getDialogById(1));
+
+        activity.showDialog(1);
+        Dialog secondDialog = ShadowDialog.getLatestDialog();
+
+        assertNotSame("dialogs should not be the same instance", firstDialog, secondDialog);
+    }
 
     @Test
     public void shouldCallOnCreateDialogFromShowDialog() {
@@ -362,7 +400,7 @@ public class ActivityTest {
         activity.setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_PORTRAIT );
         assertThat( activity.getRequestedOrientation(), equalTo( ActivityInfo.SCREEN_ORIENTATION_PORTRAIT ) );
     }
-    
+
     @Test
     public void retrieveIdOfResource() {
         Activity activity = new Activity();
@@ -373,7 +411,7 @@ public class ActivityTest {
 
         int id = activity.getResources().getIdentifier("hello", "string", "com.xtremelabs.robolectric");
         assertTrue(id > 0);
-        
+
         String hello = activity.getResources().getString(id);
         assertEquals("Hello", hello);
     }

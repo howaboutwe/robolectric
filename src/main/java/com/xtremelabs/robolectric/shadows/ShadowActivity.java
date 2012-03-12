@@ -154,22 +154,22 @@ public class ShadowActivity extends ShadowContextWrapper {
     public Intent getIntent() {
         return intent;
     }
-    
+
     @Implementation(i18nSafe=false)
     public void setTitle(CharSequence title) {
     	this.title = title;
     }
-    
+
     @Implementation
     public void setTitle(int titleId) {
     	this.title = this.getResources().getString(titleId);
     }
-    
+
     @Implementation
     public CharSequence getTitle() {
     	return title;
     }
-    
+
     /**
      * Sets the {@code contentView} for this {@code Activity} by invoking the
      * {@link android.view.LayoutInflater}
@@ -455,6 +455,21 @@ public class ShadowActivity extends ShadowContextWrapper {
     }
 
     @Implementation
+    public final void dismissDialog(int id) {
+        final Dialog dialog = dialogForId.get(id);
+        if (dialog == null) {
+            throw new IllegalArgumentException();
+        }
+
+        dialog.dismiss();
+    }
+
+    @Implementation
+    public final void removeDialog(int id) {
+        dialogForId.remove(id);
+    }
+
+    @Implementation
     public final boolean showDialog(int id, Bundle bundle) {
         Dialog dialog = null;
         this.lastShownDialogId = id;
@@ -514,5 +529,9 @@ public class ShadowActivity extends ShadowContextWrapper {
 
     protected Activity getRealActivity() {
         return realActivity;
+    }
+
+    public Dialog getDialogById(int dialogId) {
+        return dialogForId.get(dialogId);
     }
 }
