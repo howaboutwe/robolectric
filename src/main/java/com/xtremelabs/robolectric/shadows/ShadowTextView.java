@@ -51,6 +51,7 @@ public class ShadowTextView extends ShadowView {
         applyTextColorAttribute();
         applyHintAttribute();
         applyHintColorAttribute();
+        applyInputTypeAttribute();
         applyCompoundDrawablesWithIntrinsicBoundsAttributes();
     }
 
@@ -344,6 +345,17 @@ public class ShadowTextView extends ShadowView {
 
             }
             setHint(hint);
+        }
+    }
+
+    private void applyInputTypeAttribute() {
+        String inputTypeString = attributeSet.getAttributeValue("android", "inputType");
+        int inputType = 0;
+        if (inputTypeString != null) {
+            if (inputTypeString.equals("phone")) {
+                inputType = 3;
+            }
+            setInputType(inputType);
         }
     }
 
