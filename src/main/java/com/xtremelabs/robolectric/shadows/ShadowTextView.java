@@ -52,6 +52,7 @@ public class ShadowTextView extends ShadowView {
         applyHintAttribute();
         applyHintColorAttribute();
         applyInputTypeAttribute();
+        applyImeOptionsAttribute();
         applyCompoundDrawablesWithIntrinsicBoundsAttributes();
     }
 
@@ -356,6 +357,17 @@ public class ShadowTextView extends ShadowView {
                 inputType = 3;
             }
             setInputType(inputType);
+        }
+    }
+
+    private void applyImeOptionsAttribute() {
+        String imeOptionsString = attributeSet.getAttributeValue("android", "imeOptions");
+        int imeOptions = 0;
+        if (imeOptionsString != null) {
+            if (imeOptionsString.equals("actionDone")) {
+                imeOptions = EditorInfo.IME_ACTION_DONE;
+            }
+            setImeOptions(imeOptions);
         }
     }
 
