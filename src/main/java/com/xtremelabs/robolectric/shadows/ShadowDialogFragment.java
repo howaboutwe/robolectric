@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+
 import com.xtremelabs.robolectric.internal.Implementation;
 import com.xtremelabs.robolectric.internal.Implements;
 import com.xtremelabs.robolectric.internal.RealObject;
@@ -24,6 +26,15 @@ public class ShadowDialogFragment extends ShadowFragment {
     public void show(FragmentManager manager, String tag) {
         if (dialog == null) {
             manager.beginTransaction().add(realFragment, tag).commit();
+            dialog = ((DialogFragment) realFragment).onCreateDialog(null);
+        }
+        dialog.show();
+    }
+
+    @Implementation
+    public void show(FragmentTransaction transaction, String tag) {
+        if (dialog == null) {
+            transaction.add(realFragment, tag).commit();
             dialog = ((DialogFragment) realFragment).onCreateDialog(null);
         }
         dialog.show();
