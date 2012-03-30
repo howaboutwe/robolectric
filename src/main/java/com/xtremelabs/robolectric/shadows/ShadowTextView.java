@@ -43,7 +43,7 @@ public class ShadowTextView extends ShadowView {
     private int inputType;
 
     private List<TextWatcher> watchers = new ArrayList<TextWatcher>();
-    
+
     @Override
     public void applyAttributes() {
         super.applyAttributes();
@@ -60,14 +60,14 @@ public class ShadowTextView extends ShadowView {
     @Implementation(i18nSafe=false)
     public void setText(CharSequence text) {
     	sendBeforeTextChanged(text);
-    	
+
     	if (text == null) {
             text = "";
         }
-    	
+
     	CharSequence oldValue = this.text;
         this.text = text;
-        
+
         sendOnTextChanged(oldValue);
         sendAfterTextChanged();
     }
@@ -75,10 +75,10 @@ public class ShadowTextView extends ShadowView {
     @Implementation
     public void setText(int textResourceId) {
     	sendBeforeTextChanged(text);
-    	
+
     	CharSequence oldValue = this.text;
         this.text = getResources().getText(textResourceId);
-        
+
     	sendOnTextChanged(oldValue);
         sendAfterTextChanged();
     }
@@ -101,7 +101,7 @@ public class ShadowTextView extends ShadowView {
     		watcher.beforeTextChanged(this.text, 0, this.text.length(), newValue.length());
         }
 	}
-    
+
     @Implementation
     public CharSequence getText() {
         return text;
@@ -156,17 +156,17 @@ public class ShadowTextView extends ShadowView {
     public final void setHintTextColor(int color) {
         hintColorHexValue = color;
     }
-    
+
     @Implementation
     public final boolean getLinksClickable() {
     	return linksClickable;
     }
-    
+
     @Implementation
     public final void setLinksClickable(boolean whether) {
     	linksClickable = whether;
     }
-    
+
     @Implementation
     public final MovementMethod getMovementMethod() {
     	return movementMethod;
@@ -176,7 +176,7 @@ public class ShadowTextView extends ShadowView {
     public final void setMovementMethod(MovementMethod movement) {
     	movementMethod = movement;
     }
-    
+
     @Implementation
     public URLSpan[] getUrls() {
         String[] words = text.toString().split("\\s+");
@@ -243,28 +243,28 @@ public class ShadowTextView extends ShadowView {
             return false;
         }
     }
-    
+
     @Implementation
     public int getGravity() {
     	return gravity;
     }
-    
+
     @Implementation
     public void setGravity(int gravity) {
     	this.gravity = gravity;
     }
-    
-    
+
+
     @Implementation
     public int getImeOptions() {
     	return imeOptions;
     }
-    
+
     @Implementation
     public void setImeOptions(int imeOptions) {
     	this.imeOptions = imeOptions;
     }
-    
+
     /**
      * Returns the text string of this {@code TextView}.
      * <p/>
@@ -284,7 +284,7 @@ public class ShadowTextView extends ShadowView {
     public int hashCode() {
         return super.hashCode();
     }
-    
+
      public CompoundDrawables getCompoundDrawablesImpl() {
         return compoundDrawablesImpl;
     }
@@ -313,7 +313,7 @@ public class ShadowTextView extends ShadowView {
     public boolean isAutoLinkPhoneNumbers() {
         return autoLinkPhoneNumbers;
     }
-    
+
     private void applyTextAttribute() {
         String text = attributeSet.getAttributeValue("android", "text");
         if (text != null) {
@@ -368,6 +368,9 @@ public class ShadowTextView extends ShadowView {
             if (imeOptionsString.equals("actionDone")) {
                 imeOptions = EditorInfo.IME_ACTION_DONE;
             }
+            else if (imeOptionsString.equals("actionNext")) {
+                imeOptions = EditorInfo.IME_ACTION_NEXT;
+            }
             setImeOptions(imeOptions);
         }
     }
@@ -416,14 +419,14 @@ public class ShadowTextView extends ShadowView {
     public void addTextChangedListener(TextWatcher watcher) {
         this.watchers.add(watcher);
     }
-    
+
     /**
      * @return the list of currently registered watchers/listeners
      */
     public List<TextWatcher> getWatchers() {
         return watchers;
     }
-    
+
     public static class CompoundDrawables {
         public int left;
         public int top;
