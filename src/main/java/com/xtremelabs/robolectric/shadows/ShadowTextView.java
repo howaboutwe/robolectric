@@ -41,6 +41,7 @@ public class ShadowTextView extends ShadowView {
     private int textAppearanceId;
     private TransformationMethod transformationMethod;
     private int inputType;
+    private boolean singleLine = false;
 
     private List<TextWatcher> watchers = new ArrayList<TextWatcher>();
 
@@ -54,6 +55,7 @@ public class ShadowTextView extends ShadowView {
         applyHintColorAttribute();
         applyInputTypeAttribute();
         applyImeOptionsAttribute();
+        applySingleLineAttribute();
         applyCompoundDrawablesWithIntrinsicBoundsAttributes();
     }
 
@@ -375,6 +377,13 @@ public class ShadowTextView extends ShadowView {
         }
     }
 
+    private void applySingleLineAttribute() {
+        String singleLineString = attributeSet.getAttributeValue("android", "singleLine");
+        if (singleLineString != null) {
+            singleLine = singleLineString.equals("true");
+        }
+    }
+
     private void applyHintColorAttribute() {
         String colorValue = attributeSet.getAttributeValue("android", "hintColor");
         if (colorValue != null) {
@@ -418,6 +427,13 @@ public class ShadowTextView extends ShadowView {
     @Implementation
     public void addTextChangedListener(TextWatcher watcher) {
         this.watchers.add(watcher);
+    }
+
+    /**
+     * Non-Android accessor
+     */
+    public boolean isSingleLine() {
+        return singleLine;
     }
 
     /**
