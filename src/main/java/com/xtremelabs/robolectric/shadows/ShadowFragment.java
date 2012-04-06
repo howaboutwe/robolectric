@@ -118,6 +118,11 @@ public class ShadowFragment {
     }
 
     @Implementation
+    public void startActivityForResult(Intent intent, int requestCode) {
+        fragmentActivity.startActivity(intent);
+    }
+
+    @Implementation
     public boolean isResumed() {
         return resumed;
     }
