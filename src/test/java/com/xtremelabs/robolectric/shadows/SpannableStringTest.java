@@ -1,33 +1,31 @@
 package com.xtremelabs.robolectric.shadows;
 
-import android.text.SpannedString;
+import android.text.SpannableString;
+
 import com.xtremelabs.robolectric.WithTestDefaultsRunner;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static junit.framework.Assert.assertSame;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 
 @RunWith(WithTestDefaultsRunner.class)
-public class SpannedStringTest {
-
+public class SpannableStringTest {
     @Test
     public void toString_shouldDelegateToUnderlyingCharSequence() {
-        SpannedString spannedString = new SpannedString("foo");
+        SpannableString spannedString = new SpannableString("foo");
         assertEquals("foo", spannedString.toString());
     }
 
     @Test
     public void valueOfSpannedString_shouldReturnItself() {
-        SpannedString spannedString = new SpannedString("foo");
-        assertSame(spannedString, SpannedString.valueOf(spannedString));
+        SpannableString spannedString = new SpannableString("foo");
+        assertSame(spannedString, SpannableString.valueOf(spannedString));
     }
 
     @Test
     public void valueOfCharSequence_shouldReturnNewSpannedString() {
-        assertEquals("foo", SpannedString.valueOf("foo").toString());
+        assertEquals("foo", SpannableString.valueOf("foo").toString());
     }
-    
-
 }
-
