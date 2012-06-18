@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.animation.Animation;
+
 import com.xtremelabs.robolectric.Robolectric;
 import com.xtremelabs.robolectric.internal.Implementation;
 import com.xtremelabs.robolectric.internal.Implements;
@@ -182,7 +183,7 @@ public class ShadowView {
 
         return null;
     }
-    
+
     @Implementation
     public View findViewWithTag(Object obj) {
         if (obj.equals(this.getTag())) {
@@ -324,6 +325,16 @@ public class ShadowView {
     @Implementation
     public void setOnLongClickListener(View.OnLongClickListener onLongClickListener) {
         this.onLongClickListener = onLongClickListener;
+    }
+
+
+    /**
+     * Non-Android accessor.
+     *
+     * @return onLongClickListener for the view.
+     */
+    public View.OnLongClickListener getOnLongClickListener() {
+        return this.onLongClickListener;
     }
 
     @Implementation
