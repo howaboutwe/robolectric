@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -10,7 +12,7 @@
 
     <groupId>com.pivotallabs</groupId>
     <artifactId>robolectric</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1_haw</version>
     <packaging>jar</packaging>
     <name>Robolectric</name>
     <description>An alternative Android testing framework.</description>
@@ -94,11 +96,10 @@
             <scope>provided</scope>
         </dependency>
 
-
         <dependency>
-            <groupId>com.google.android.maps</groupId>
+            <groupId>com.google.android</groupId>
             <artifactId>maps</artifactId>
-            <version>10_r2</version>
+            <version>15_haw</version>
             <scope>provided</scope>
         </dependency>
 
@@ -163,17 +164,17 @@
                     </execution>
                 </executions>
             </plugin>
-			<!-- required for testing robolectric-sqlite -->
+            <!-- required for testing robolectric-sqlite -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.3.1</version>
                 <executions>
-                  <execution>
-                    <goals>
-                      <goal>test-jar</goal>
-                    </goals>
-                  </execution>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
 
@@ -233,7 +234,8 @@
                                     <overWriteReleases>false</overWriteReleases>
                                     <overWriteSnapshots>false</overWriteSnapshots>
                                     <overWriteIfNewer>true</overWriteIfNewer>
-                                    <excludeArtifactIds>android,maps,mockito-core</excludeArtifactIds>
+                                    <excludeArtifactIds>android,maps,mockito-core
+                                    </excludeArtifactIds>
                                 </configuration>
                             </execution>
                         </executions>
