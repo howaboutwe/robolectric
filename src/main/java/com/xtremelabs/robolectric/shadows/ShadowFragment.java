@@ -119,7 +119,7 @@ public class ShadowFragment {
 
     @Implementation
     public void startActivityForResult(Intent intent, int requestCode) {
-        fragmentActivity.startActivity(intent);
+        fragmentActivity.startActivityForResult(intent, requestCode);
     }
 
     @Implementation
