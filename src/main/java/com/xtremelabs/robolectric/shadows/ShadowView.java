@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.animation.Animation;
+import android.widget.LinearLayout;
 
 import com.xtremelabs.robolectric.Robolectric;
 import com.xtremelabs.robolectric.internal.Implementation;
@@ -58,7 +59,7 @@ public class ShadowView {
     private int paddingTop;
     private int paddingRight;
     private int paddingBottom;
-    private ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(0, 0);
+    private LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, 0);
     private Map<Integer, Object> tags = new HashMap<Integer, Object>();
     private boolean clickable;
     protected boolean focusable;
@@ -209,7 +210,7 @@ public class ShadowView {
 
     @Implementation
     public void setLayoutParams(ViewGroup.LayoutParams params) {
-        layoutParams = params;
+        layoutParams = (LinearLayout.LayoutParams) params;
     }
 
     @Implementation
