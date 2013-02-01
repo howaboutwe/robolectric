@@ -13,8 +13,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static com.xtremelabs.robolectric.Robolectric.shadowOf;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(WithTestDefaultsRunner.class)
@@ -48,8 +50,21 @@ public class BitmapTest {
         Bitmap newBitmap = Bitmap.createBitmap(originalBitmap);
         assertEquals("Original bitmap created from Bitmap object", shadowOf(newBitmap).getDescription());
     }
-    
-    
+
+    @Test
+    public void shouldCreateScaledBitmapWithMatrix() throws Exception {
+        Bitmap originalBitmap = Robolectric.newInstanceOf(Bitmap.class);
+        shadowOf(originalBitmap).setWidth(200);
+        shadowOf(originalBitmap).setHeight(200);
+        shadowOf(originalBitmap).appendDescription("Original bitmap");
+
+        Bitmap newBitmap = Bitmap.createBitmap(originalBitmap, 0, 0 , 100, 100, new Matrix(), true);
+        assertThat(shadowOf(newBitmap).getWidth(), equalTo(100));
+        assertThat(shadowOf(newBitmap).getHeight(), equalTo(100));
+        assertThat(shadowOf(newBitmap).getDescription(),
+                equalTo("Original bitmap scaled to 100 x 100 with filter true transformed by matrix"));
+    }
+
     @Test
     public void shouldRecycleBitmap() throws Exception {
         Bitmap bitmap = Bitmap.createBitmap(100, 200, Config.ARGB_8888);
