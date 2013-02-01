@@ -1,11 +1,12 @@
 package com.xtremelabs.robolectric.shadows;
 
-import android.text.SpannedString;
+import android.text.SpannableString;
+
 import com.xtremelabs.robolectric.internal.Implementation;
 import com.xtremelabs.robolectric.internal.Implements;
 
-@Implements(SpannedString.class)
-public class ShadowSpannedString {
+@Implements(SpannableString.class)
+public class ShadowSpannableString {
 
     private CharSequence charSequence;
 
@@ -19,11 +20,10 @@ public class ShadowSpannedString {
     }
 
     @Implementation
-    public static SpannedString valueOf(CharSequence charSequence) {
-        if (charSequence instanceof SpannedString) {
-            return (SpannedString) charSequence;
+    public static SpannableString valueOf(CharSequence charSequence) {
+        if (charSequence instanceof SpannableString) {
+            return (SpannableString) charSequence;
         }
-        return new SpannedString(charSequence);
+        return new SpannableString(charSequence);
     }
-
 }

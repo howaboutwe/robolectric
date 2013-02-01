@@ -4,8 +4,8 @@ package com.xtremelabs.robolectric.shadows;
 import android.app.Activity;
 import android.content.Context;
 import android.text.Html;
+import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.SpannedString;
 import android.widget.TextView;
 import com.xtremelabs.robolectric.WithTestDefaultsRunner;
 import org.junit.After;
@@ -48,14 +48,14 @@ public class HtmlTest {
     @Test
     public void fromHtml_isMockable() {
         String text = "<b>foo</b>";
-        ShadowHtml.expect(text).andReturn(new SpannedString("foo"));
+        ShadowHtml.expect(text).andReturn(new SpannableString("foo"));
         Spanned spanned = Html.fromHtml(text);
         assertEquals("foo", spanned.toString());
     }
 
     @Test
     public void clearExpectations() {
-        ShadowHtml.expect("<b>foo</b>").andReturn(new SpannedString("foo"));
+        ShadowHtml.expect("<b>foo</b>").andReturn(new SpannableString("foo"));
         ShadowHtml.clearExpectations();
         Spanned spanned = Html.fromHtml("<b>foo</b>");
         assertEquals("<b>foo</b>", spanned.toString());
