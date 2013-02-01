@@ -45,6 +45,16 @@ public class ShadowTextUtils {
     }
 
     @Implementation
+    public static CharSequence concat(CharSequence... text) {
+        String result = "";
+        for (CharSequence t : text) {
+            result = result + t;
+        }
+
+        return result;
+    }
+
+    @Implementation
     public static String htmlEncode(String s) {
         StringBuilder sb = new StringBuilder();
         char c;

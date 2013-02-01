@@ -27,15 +27,22 @@ public class TextUtilsTest {
         assertThat(TextUtils.isEmpty("123"), equalTo(false));
     }
 
-    @Test public void testJoin() {
+    @Test
+    public void testJoin() {
       assertThat(TextUtils.join(",", new String[] { "1" }), equalTo("1"));
       assertThat(TextUtils.join(",", new String[] { "1", "2", "3" }), equalTo("1,2,3"));
       assertThat(TextUtils.join(",", Arrays.asList("1", "2", "3")), equalTo("1,2,3"));
     }
 
-    @Test public void testEllipsize() {
+    @Test
+    public void testEllipsize() {
         TextPaint p = new TextPaint();
         assertThat(TextUtils.ellipsize("apples", p, 100, TextUtils.TruncateAt.END).toString(), equalTo("apples"));
         assertThat(TextUtils.ellipsize("", p, 100, TextUtils.TruncateAt.END).toString(), equalTo(""));
+    }
+
+    @Test
+    public void testConcat() {
+        assertThat(TextUtils.concat("a", "b", "c").toString(), equalTo("abc"));
     }
 }
