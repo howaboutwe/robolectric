@@ -290,8 +290,8 @@ import com.xtremelabs.robolectric.shadows.ShadowSettings;
 import com.xtremelabs.robolectric.shadows.ShadowShapeDrawable;
 import com.xtremelabs.robolectric.shadows.ShadowSimpleCursorAdapter;
 import com.xtremelabs.robolectric.shadows.ShadowSmsManager;
+import com.xtremelabs.robolectric.shadows.ShadowSpannableString;
 import com.xtremelabs.robolectric.shadows.ShadowSpannableStringBuilder;
-import com.xtremelabs.robolectric.shadows.ShadowSpannedString;
 import com.xtremelabs.robolectric.shadows.ShadowSslErrorHandler;
 import com.xtremelabs.robolectric.shadows.ShadowStateListDrawable;
 import com.xtremelabs.robolectric.shadows.ShadowSurfaceView;
@@ -543,8 +543,8 @@ public class Robolectric {
                 ShadowSimpleCursorAdapter.class,
                 ShadowShapeDrawable.class,
                 ShadowSmsManager.class,
+                ShadowSpannableString.class,
                 ShadowSpannableStringBuilder.class,
-                ShadowSpannedString.class,
                 ShadowSyncResult.class,
                 ShadowSyncResult.ShadowSyncStats.class,
                 ShadowSQLiteProgram.class,
