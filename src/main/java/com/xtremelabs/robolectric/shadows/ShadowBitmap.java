@@ -1,6 +1,8 @@
 package com.xtremelabs.robolectric.shadows;
 
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+
 import com.xtremelabs.robolectric.Robolectric;
 import com.xtremelabs.robolectric.internal.Implementation;
 import com.xtremelabs.robolectric.internal.Implements;
@@ -54,6 +56,13 @@ public class ShadowBitmap {
     }
 
     @Implementation
+    public static Bitmap createBitmap(Bitmap b, int x, int y, int w, int h, Matrix m, boolean f) {
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(b, w, h, f);
+        shadowOf(scaledBitmap).appendDescription(" transformed by matrix");
+        return scaledBitmap;
+    }
+
+    @Implementation
     public static Bitmap createScaledBitmap(Bitmap src, int dstWidth, int dstHeight, boolean filter) {
         Bitmap scaledBitmap = Robolectric.newInstanceOf(Bitmap.class);
         ShadowBitmap shadowBitmap = shadowOf(scaledBitmap);
@@ -66,7 +75,7 @@ public class ShadowBitmap {
         shadowBitmap.setHeight(dstHeight);
         return scaledBitmap;
     }
-    
+
     @Implementation
     public void recycle() {
     	recycled = true;
