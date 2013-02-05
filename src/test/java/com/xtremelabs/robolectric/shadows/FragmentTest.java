@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static com.xtremelabs.robolectric.Robolectric.shadowOf;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -304,6 +305,25 @@ public class FragmentTest {
 
         Fragment currentFragment = fragmentManager.findFragmentById(containerId);
         assertSame(fragment1, currentFragment);
+    }
+
+    @Test
+    public void shouldHideAndShowFragment() throws Exception {
+        // Create and add fragment.
+        DummyFragment fragment = new DummyFragment();
+        ContainerActivity activity = new ContainerActivity();
+        FragmentManager manager = activity.getSupportFragmentManager();
+        manager.beginTransaction().add(fragment, null).commit();
+
+        // Test FragmentTransaction#hide(Fragment).
+        manager.beginTransaction().hide(fragment).commit();
+        assertThat(fragment.isVisible(), is(false));
+        assertThat(fragment.isHidden(), is(true));
+
+        // Test FragmentTransaction#show(Fragment).
+        manager.beginTransaction().show(fragment).commit();
+        assertThat(fragment.isVisible(), is(true));
+        assertThat(fragment.isHidden(), is(false));
     }
 
     private void startFragment(DummyFragment fragment) {
