@@ -2,6 +2,7 @@ package com.xtremelabs.robolectric.shadows;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.view.View;
@@ -339,6 +340,15 @@ public class AlertDialogTest {
         assertNotNull(dialog.findViewById(R.id.title));
     }
 
+    @Test
+    public void shouldPassContextAndThemeToDialog() throws Exception {
+        Context context = new ContextWrapper(null);
+        int themeId = 1;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, themeId);
+        AlertDialog dialog = builder.create();
+        assertThat(dialog.getContext(), equalTo(context));
+        assertThat(shadowOf(dialog).getThemeId(), equalTo(themeId));
+    }
 
     private static class TestDialogOnClickListener implements DialogInterface.OnClickListener {
         private DialogInterface dialog;
