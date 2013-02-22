@@ -213,11 +213,13 @@ public class ShadowFragmentActivity extends ShadowActivity {
 
             @Override
             public FragmentTransaction hide(Fragment fragment) {
+                shadowOf(fragment).hide();
                 return this;
             }
 
             @Override
             public FragmentTransaction show(Fragment fragment) {
+                shadowOf(fragment).show();
                 return this;
             }
 

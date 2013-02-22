@@ -33,6 +33,7 @@ public class ShadowFragment {
 
     private Fragment targetFragment;
     private boolean resumed;
+    private boolean visible;
 
     @Implementation
     public void setArguments(Bundle bundle) {
@@ -96,7 +97,12 @@ public class ShadowFragment {
 
     @Implementation
     public boolean isVisible() {
-        return fragmentActivity != null;
+        return isAdded() && visible;
+    }
+
+    @Implementation
+    public boolean isHidden() {
+        return !visible;
     }
 
     @Implementation
@@ -151,6 +157,7 @@ public class ShadowFragment {
     public void setActivity(FragmentActivity activity) {
         if (fragmentActivity != null) realFragment.onDetach();
         fragmentActivity = activity;
+        visible = true;
         if (activity != null) realFragment.onAttach(activity);
         try {
             Field field = Fragment.class.getDeclaredField("mActivity");
@@ -173,5 +180,13 @@ public class ShadowFragment {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public void show() {
+        visible = true;
+    }
+
+    public void hide() {
+        visible = false;
     }
 }
