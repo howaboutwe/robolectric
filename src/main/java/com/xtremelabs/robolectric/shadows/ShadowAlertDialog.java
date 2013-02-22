@@ -198,6 +198,8 @@ public class ShadowAlertDialog extends ShadowDialog {
      */
     @Implements(AlertDialog.Builder.class)
     public static class ShadowBuilder {
+        private static int NO_THEME = -1;
+
         @RealObject
         private AlertDialog.Builder realBuilder;
 
@@ -222,6 +224,7 @@ public class ShadowAlertDialog extends ShadowDialog {
         private int checkedItem;
         private View view;
         private View customTitleView;
+        private int themeId = NO_THEME;
 
         /**
          * just stashes the context for later use
@@ -230,6 +233,11 @@ public class ShadowAlertDialog extends ShadowDialog {
          */
         public void __constructor__(Context context) {
             this.context = context;
+        }
+
+        public void __constructor__(Context context, int themeId) {
+            this.context = context;
+            this.themeId = themeId;
         }
 
         /**
@@ -385,16 +393,26 @@ public class ShadowAlertDialog extends ShadowDialog {
         @Implementation
         public AlertDialog create() {
             AlertDialog realDialog;
-            try {
-                Constructor<AlertDialog> c = AlertDialog.class.getDeclaredConstructor(Context.class);
-                c.setAccessible(true);
-                realDialog = c.newInstance((Context) null);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+
+            if (themeId == NO_THEME) {
+                try {
+                    Constructor<AlertDialog> c = AlertDialog.class.getDeclaredConstructor(Context.class);
+                    c.setAccessible(true);
+                    realDialog = c.newInstance(context);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                try {
+                    Constructor<AlertDialog> c = AlertDialog.class.getDeclaredConstructor(Context.class, int.class);
+                    c.setAccessible(true);
+                    realDialog = c.newInstance(context, themeId);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             ShadowAlertDialog latestAlertDialog = shadowOf(realDialog);
-            latestAlertDialog.context = context;
             latestAlertDialog.items = items;
             latestAlertDialog.adapter = adapter;
             latestAlertDialog.setTitle(title);
