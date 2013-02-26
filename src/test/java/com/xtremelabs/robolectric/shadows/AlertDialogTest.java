@@ -7,6 +7,7 @@ import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import com.xtremelabs.robolectric.R;
 import com.xtremelabs.robolectric.Robolectric;
@@ -348,6 +349,42 @@ public class AlertDialogTest {
         AlertDialog dialog = builder.create();
         assertThat(dialog.getContext(), equalTo(context));
         assertThat(shadowOf(dialog).getThemeId(), equalTo(themeId));
+    }
+
+    @Test
+    public void setButton_shouldCreatePositiveButton() throws Exception {
+        AlertDialog dialog = new AlertDialog.Builder(new Activity()).create();
+        TestDialogOnClickListener listener = new TestDialogOnClickListener();
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "positive", listener);
+        Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        assertThat(button.getText().toString(), equalTo("positive"));
+
+        button.performClick();
+        assertThat(listener.clickedItem, equalTo(AlertDialog.BUTTON_POSITIVE));
+    }
+
+    @Test
+    public void setButton_shouldCreateNegativeButton() throws Exception {
+        AlertDialog dialog = new AlertDialog.Builder(new Activity()).create();
+        TestDialogOnClickListener listener = new TestDialogOnClickListener();
+        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "negative", listener);
+        Button button = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        assertThat(button.getText().toString(), equalTo("negative"));
+
+        button.performClick();
+        assertThat(listener.clickedItem, equalTo(AlertDialog.BUTTON_NEGATIVE));
+    }
+
+    @Test
+    public void setButton_shouldCreateNeutralButton() throws Exception {
+        AlertDialog dialog = new AlertDialog.Builder(new Activity()).create();
+        TestDialogOnClickListener listener = new TestDialogOnClickListener();
+        dialog.setButton(AlertDialog.BUTTON_NEUTRAL, "neutral", listener);
+        Button button = dialog.getButton(DialogInterface.BUTTON_NEUTRAL);
+        assertThat(button.getText().toString(), equalTo("neutral"));
+
+        button.performClick();
+        assertThat(listener.clickedItem, equalTo(AlertDialog.BUTTON_NEUTRAL));
     }
 
     private static class TestDialogOnClickListener implements DialogInterface.OnClickListener {
